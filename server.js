@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
-// const logger = require('morgan');
+const logger = require('morgan');
 
 const app = express();
 
@@ -25,7 +25,7 @@ app.use(cookieParser());
 // app.use(logger('dev'));
 
 mongoose.Promise = global.Promise;
-mongoose.connect(dbConfig.url,{ useNewUrlParser: true, useUnifiedTopology: true } );
+mongoose.connect(dbConfig.url,{ useNewUrlParser: true } );
 
 const auth = require('./routes/authRoutes');
 const posts = require('./routes/postRoutes');
