@@ -65,7 +65,7 @@ const dbConfig = require('./config/secret');
 const auth = require('./routes/authRoutes');
 const posts = require('./routes/postRoutes');
 const users = require('./routes/userRoutes');
-// const friends = require('./routes/friendsRoutes');
+const friends = require('./routes/friendsRoutes');
 // const message = require('./routes/messageRoutes');
 // const image = require('./routes/imageRoutes');
 
@@ -83,7 +83,7 @@ mongoose.connect(
 app.use('/api/chatup', auth);
 app.use('/api/chatup', posts);
 app.use('/api/chatup', users);
-// app.use('/api/chatapp', friends);
+app.use('/api/chatup', friends);
 // app.use('/api/chatapp', message);
 // app.use('/api/chatapp', image);
 
