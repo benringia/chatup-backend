@@ -67,5 +67,57 @@ module.exports = {
     }).catch(err => {
         res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Error Occured'});
     });
-   }
+   },
+   async GetAllPosts(req, res) {
+    try {
+     const posts = await Post.find({})
+     .populate('user')
+     .sort({ created: -1 });
+
+     return res.status(HttpStatus.OK).json({message: 'All posts', posts });
+    } catch(err) {
+     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Error occured' });
+    }
+  },
+
+  async AddComment(req, res) {
+    const postId = req.body.postId;
+    await Post.update(
+      {
+        _id: postId
+      },
+      {
+        $push: {
+          comments: {
+            userId: req.user._id,
+            username: req.user.username,
+            comment: req.body.comment,
+            createdAt: new Date()
+          }
+        }
+      }
+    )
+      .then(() => {
+        res.status(HttpStatus.OK).json({ message: 'Comment added to post' });
+      })
+      .catch(err =>
+        res
+          .status(HttpStatus.INTERNAL_SERVER_ERROR)
+          .json({ message: 'Error occured' })
+      );
+  },
+
+  async GetPost(req, res) {
+    await Post.findOne({ _id: req.params.id })
+      .populate('user')
+      .populate('comments.userId')
+      .then(post => {
+        res.status(HttpStatus.OK).json({ message: 'Post found', post });
+      })
+      .catch(err =>
+        res
+          .status(HttpStatus.NOT_FOUND)
+          .json({ message: 'Post not found', post })
+      );
+  }
 };
