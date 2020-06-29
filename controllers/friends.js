@@ -30,13 +30,13 @@ module.exports = {
             followers: {
               follower: req.user._id
              }
-             //,
-            // notifications: {
-            //   senderId: req.user._id,
-            //   message: `${req.user.username} is now following you.`,
-            //   created: new Date(),
-            //   viewProfile: false
-            // }
+             ,
+            notifications: {
+              senderId: req.user._id,
+              message: `${req.user.username} is now following you.`,
+              created: new Date(),
+              viewProfile: false
+            }
           }
         }
       );
@@ -93,47 +93,47 @@ module.exports = {
       });
   },
 
-//   async MarkNotification(req, res) {
-//     if (!req.body.deleteValue) {
-//       await User.updateOne(
-//         {
-//           _id: req.user._id,
-//           'notifications._id': req.params.id
-//         },
-//         {
-//           $set: { 'notifications.$.read': true }
-//         }
-//       )
-//         .then(() => {
-//           res.status(HttpStatus.OK).json({ message: 'Marked as read' });
-//         })
-//         .catch(err => {
-//           res
-//             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//             .json({ message: 'Error occured' });
-//         });
-//     } else {
-//       await User.update(
-//         {
-//           _id: req.user._id,
-//           'notifications._id': req.params.id
-//         },
-//         {
-//           $pull: {
-//             notifications: { _id: req.params.id }
-//           }
-//         }
-//       )
-//         .then(() => {
-//           res.status(HttpStatus.OK).json({ message: 'Deleted successfully' });
-//         })
-//         .catch(err => {
-//           res
-//             .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//             .json({ message: 'Error occured' });
-//         });
-//     }
-//   },
+  async MarkNotification(req, res) {
+    if (!req.body.deleteValue) {
+      await User.updateOne(
+        {
+          _id: req.user._id,
+          'notifications._id': req.params.id
+        },
+        {
+          $set: { 'notifications.$.read': true }
+        }
+      )
+        .then(() => {
+          res.status(HttpStatus.OK).json({ message: 'Marked as read' });
+        })
+        .catch(err => {
+          res
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .json({ message: 'Error occured' });
+        });
+    } else {
+      await User.update(
+        {
+          _id: req.user._id,
+          'notifications._id': req.params.id
+        },
+        {
+          $pull: {
+            notifications: { _id: req.params.id }
+          }
+        }
+      )
+        .then(() => {
+          res.status(HttpStatus.OK).json({ message: 'Deleted successfully' });
+        })
+        .catch(err => {
+          res
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .json({ message: 'Error occured' });
+        });
+    }
+  },
 
 //   async MarkAllNotifications(req, res) {
 //     await User.update(
