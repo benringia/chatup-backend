@@ -9,6 +9,8 @@ module.exports = {
             .populate('posts.postId')
             .populate('following.userFollowed')
             .populate('followers.follower')
+            .populate('chatList.receiverId')
+            .populate('chatList.msgId')
             .then(result => {
                 res.status(httpStatus.OK).json({message: 'All users', result});
             }).catch(err => {
@@ -21,6 +23,8 @@ module.exports = {
             .populate('posts.postId')
             .populate('following.userFollowed')
             .populate('followers.follower')
+            .populate('chatList.receiverId')
+            .populate('chatList.msgId')
             .then(result => {
                 res.status(httpStatus.OK).json({message: 'User By ID', result});
             }).catch(err => {
@@ -33,8 +37,8 @@ module.exports = {
           .populate('posts.postId')
           .populate('following.userFollowed')
           .populate('followers.follower')
-        //   .populate('chatList.receiverId')
-        //   .populate('chatList.msgId')
+          .populate('chatList.receiverId')
+          .populate('chatList.msgId')
         //   .populate('notifications.senderId')
           .then(result => {
             res.status(httpStatus.OK).json({ message: 'User by username', result });
