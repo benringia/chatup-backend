@@ -12,7 +12,7 @@ app.use(cors());
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
 
-// const { User } = require('./Helpers/UserClass');
+const { User } = require('./Helpers/UserClass');
 
 require('./socket/streams')(io);
 require('./socket/private')(io);
