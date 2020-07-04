@@ -11,6 +11,7 @@ module.exports = {
             .populate('followers.follower')
             .populate('chatList.receiverId')
             .populate('chatList.msgId')
+            .populate('notifications.senderId')
             .then(result => {
                 res.status(httpStatus.OK).json({message: 'All users', result});
             }).catch(err => {
@@ -25,6 +26,7 @@ module.exports = {
             .populate('followers.follower')
             .populate('chatList.receiverId')
             .populate('chatList.msgId')
+            .populate('notifications.senderId')
             .then(result => {
                 res.status(httpStatus.OK).json({message: 'User By ID', result});
             }).catch(err => {
@@ -39,7 +41,7 @@ module.exports = {
           .populate('followers.follower')
           .populate('chatList.receiverId')
           .populate('chatList.msgId')
-        //   .populate('notifications.senderId')
+          .populate('notifications.senderId')
           .then(result => {
             res.status(httpStatus.OK).json({ message: 'User by username', result });
           })

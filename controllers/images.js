@@ -1,17 +1,18 @@
-// const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary');
 const HttpStatus = require('http-status-codes');
 
 const User = require('../models/userModels');
 
-// cloudinary.config({
-//   cloud_name: '',
-//   api_key: '',
-//   api_secret: ''
-// });
+cloudinary.config({
+  cloud_name: 'dpcl2xifo',
+  api_key: '385413283214345',
+  api_secret: 'xYrbZz8TrCjPrDsnJEYjJKtEPuY'
+});
 
 module.exports = {
   UploadImage(req, res) {
     cloudinary.uploader.upload(req.body.image, async result => {
+      console.log(result);
       await User.update(
         {
           _id: req.user._id

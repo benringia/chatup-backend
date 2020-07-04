@@ -41,7 +41,7 @@ app.use('/api/chatup', posts);
 app.use('/api/chatup', users);
 app.use('/api/chatup', friends);
 app.use('/api/chatup', message);
-app.use('/api/chatapp', image);
+app.use('/api/chatup', image);
 
 server.listen(3000, () => {
   console.log('Listening on port 3000');
