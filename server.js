@@ -23,7 +23,7 @@ const posts = require('./routes/postRoutes');
 const users = require('./routes/userRoutes');
 const friends = require('./routes/friendsRoutes');
 const message = require('./routes/messageRoutes');
-// const image = require('./routes/imageRoutes');
+const image = require('./routes/imageRoutes');
 
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true, limit: '50mb' }));
@@ -41,7 +41,7 @@ app.use('/api/chatup', posts);
 app.use('/api/chatup', users);
 app.use('/api/chatup', friends);
 app.use('/api/chatup', message);
-// app.use('/api/chatapp', image);
+app.use('/api/chatapp', image);
 
 server.listen(3000, () => {
   console.log('Listening on port 3000');
