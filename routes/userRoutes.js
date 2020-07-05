@@ -12,7 +12,7 @@ router.get(
   AuthHelper.VerifyToken,
   UserCtrl.GetUserByName
 );
-// router.post('/user/view-profile', AuthHelper.VerifyToken, UserCtrl.ProfileView);
+router.post('/user/view-profile', AuthHelper.VerifyToken, UserCtrl.ProfileView);
 // router.post(
 //   '/change-password',
 //   AuthHelper.VerifyToken,
