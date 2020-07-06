@@ -95,23 +95,6 @@ module.exports = {
     }
   },
 
-
-  //  async GetAllPosts(req, res) {
-  //    try {
-
-  //     const today = moment().startOf('day');
-  //     const tomorrow = moment(today).add(1, 'days');
-
-  //     const posts = await Post.find({created: {$gte: today.toDate(), $lt: tomorrow.toDate()}}) //post filters 24hrs older: copy this to TOP posts below
-  //     .populate('user')
-  //     .sort({ created: -1 });
-
-  //     return res.status(HttpStatus.OK).json({message: 'All posts', posts });
-  //    } catch(err) {
-  //     return res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({message: 'Error occured' });
-  //    }
-  //  },
-
    async AddLike(req, res) {
     const postId = req.body._id;
     await Post.update({
@@ -135,11 +118,15 @@ module.exports = {
       const today = moment().startOf('day');
       const tomorrow = moment(today).add(5, 'days');
   //posts
-     const posts = await Post.find({created: {$gte: today.toDate(), $lt: tomorrow.toDate()}})
+     const posts = await Post.find({
+      //  created: {$gte: today.toDate(), $lt: tomorrow.toDate()}
+      })
      .populate('user')
      .sort({ created: -1 });
 
-     const top = await Post.find({totalLikes: {$gte: 2}, created: {$gte: today.toDate(), $lt: tomorrow.toDate()}})
+     const top = await Post.find({totalLikes: {$gte: 2}
+      // , created: {$gte: today.toDate(), $lt: tomorrow.toDate()}
+    })
      .populate('user')
      .sort({ created: -1 });
   //posts
@@ -202,5 +189,30 @@ module.exports = {
           .status(HttpStatus.NOT_FOUND)
           .json({ message: 'Post not found', post })
       );
+  },
+
+  EditPost(req, res) {
+    const schema = Joi.object().keys({
+      post: Joi.string().required(),
+      id: Joi.string().optional()
+    });
+    const { error } = Joi.validate(req.body, schema);
+    if (error && error.details) {
+      return res.status(HttpStatus.BAD_REQUEST).json({ msg: error.details });
+    }
+
+    
+    const body = {
+      post: req.body.post,
+      created: new Date()
+    };
+
+    Post.findOneAndUpdate({_id: req.body.id}, body, {new: true}).then(post => {
+      res.status(HttpStatus.OK).json({message: 'Post Updated', post})
+    }).catch(err => {
+      res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: err })
+    })
   }
 };
