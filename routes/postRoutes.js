@@ -12,5 +12,6 @@ router.post('/post/add-like', AuthHelper.VerifyToken, PostCtrl.AddLike);
 router.post('/post/add-comment', AuthHelper.VerifyToken, PostCtrl.AddComment);
 
 router.put('/post/edit-post', AuthHelper.VerifyToken, PostCtrl.EditPost);
+router.delete('/post/delete-post/:id', AuthHelper.VerifyToken, PostCtrl.DeletePost);
 
 module.exports = router;

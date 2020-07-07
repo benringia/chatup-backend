@@ -214,5 +214,30 @@ module.exports = {
       .status(HttpStatus.INTERNAL_SERVER_ERROR)
       .json({ message: err })
     })
+  },
+  async DeletePost(req,res) {
+    try {
+      const { id } = req.params;
+      const result = await Post.findByIdAndRemove(id);
+      console.log(result)
+      if(!result) {
+        return res.status(HttpStatus.NOT_FOUND).json({message: 'No post found'})
+      } else {
+        await User.update(
+          {
+          _id: req.user._id
+        }, {
+          $pull: {
+            posts: {
+            postId: result._id
+          }}
+        })
+        return res.status(HttpStatus.OK).json({message: 'Deleted Successfully'});
+      }
+    } catch(err) {
+      return res
+      .status(HttpStatus.INTERNAL_SERVER_ERROR)
+      .json({ message: err })
+    }
   }
 };
