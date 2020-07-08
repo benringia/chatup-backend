@@ -43,6 +43,6 @@ app.use('/api/chatup', friends);
 app.use('/api/chatup', message);
 app.use('/api/chatup', image);
 
-server.listen(3000, () => {
-  console.log('Listening on port 3000');
+server.listen(process.env.PORT || 8080, () => {
+  console.log('Listening on port 8080');
 });
