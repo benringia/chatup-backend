@@ -8,10 +8,6 @@ const _ = require('lodash');
 const app = express();
 
 app.use(cors());
-app.use(express.static(__dirname + '/dist/chatup'));
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname + '/dist/chatup/index.html'));
-});
 
 const server = require('http').createServer(app);
 const io = require('socket.io').listen(server);
@@ -47,7 +43,6 @@ app.use('/api/chatup', friends);
 app.use('/api/chatup', message);
 app.use('/api/chatup', image);
 
-// server.listen(process.env.PORT || 8080, () => {
-//   console.log('Listening on port 8080');
-// });
-app.listen(process.env.PORT || 8080);
+server.listen(3000, () => {
+  console.log('Listening on port 3000');
+});
